@@ -28,7 +28,6 @@ def _proto_path(proto):
     if path.startswith("_virtual_imports/"):
         path = path.split("/")[2:]
         path = "/".join(path)
-        print(path)
     return path
 
 # TODO(dan): Replace with |proto_common.direct_source_infos| when
@@ -106,7 +105,7 @@ def _get_outputs(target, ctx):
 
         if ctx.label.workspace_root == "":
             file_name = src.short_path.replace(build_dir + "/", "")[:-len(src.extension) - 1]
-            protos.append(ctx.actions.declare_file(file_name + ".proto"))
+            # protos.append(ctx.actions.declare_file(file_name + ".proto"))
         else:
             file_name = _proto_path(src)[:-len(src.extension) - 1]
 
@@ -132,11 +131,6 @@ def ts_proto_library_nestjs_aspect_(target, ctx):
     all_commands = [
         _build_protoc_nestjs_command(target, ctx),
     ]
-
-    # NestJS uses raw .proto files to call proto-loader at runtime
-    for proto in protos:
-        if not proto.short_path.startswith(".."):
-            all_commands.append("cp {proto} {output_dir}/{proto}".format(proto = proto.short_path, output_dir = ctx.var["BINDIR"]))
 
     tools = []
     tools.extend(ctx.files._protoc)

@@ -1,6 +1,7 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("//bazel_tools:typescript.bzl", "typescript_proto_library")
 
+package(default_visibility = ["//visibility:public"])
 
 proto_library(
   name = "sample",
@@ -11,6 +12,6 @@ proto_library(
 )
 
 typescript_proto_library(
-  name = "sample_ts",
+  name = "sample_typescript_proto",
   proto = ":sample"
 )
