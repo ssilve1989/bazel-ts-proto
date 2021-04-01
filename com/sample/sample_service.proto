@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package com.sample;
+
+import "google/protobuf/empty.proto";
+
+message SampleResponse {
+  required int32 count = 1;
+}
+
+service SampleService {
+  rpc SampleRequest(google.protobuf.Empty) returns (SampleResponse);
+}
